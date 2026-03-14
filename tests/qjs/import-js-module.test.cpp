@@ -172,3 +172,11 @@ TEST_F(QuickJSModuleTest, ImportNodeModule) {
   ASSERT_FALSE(JS_IsException(module));
   JS_FreeValue(ctx, module);
 }
+
+TEST_F(QuickJSModuleTest, LoadDirectoryAsModuleShouldFail) {
+  auto* ctx = getContext();
+
+  JSValue module1 = QuickJSCodeLoader::loadJsModuleToNamespace(ctx, "lib");
+  EXPECT_TRUE(JS_IsException(module1));
+  JS_FreeValue(ctx, module1);
+}
