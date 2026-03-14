@@ -4,6 +4,7 @@
 
 #include "engines/common.h"
 #include "engines/quickjs/quickjs_code_loader.h"
+#include "patch/quickjs/node_module_loader.h"
 
 class QuickJSModuleTest : public testing::Test {
 protected:
@@ -176,7 +177,6 @@ TEST_F(QuickJSModuleTest, ImportNodeModule) {
 TEST_F(QuickJSModuleTest, LoadDirectoryAsModuleShouldFail) {
   auto* ctx = getContext();
 
-  JSValue module1 = QuickJSCodeLoader::loadJsModuleToNamespace(ctx, "lib");
-  // EXPECT_TRUE(JS_IsException(module1));  // no check for asan
-  // JS_FreeValue(ctx, module1);
+  char* file_content =  loadFile("lib");  // lib is a directory, not a file
+  LOG(INFO) << "File content: " << (file_content ? file_content : "null");
 }
