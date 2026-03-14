@@ -174,9 +174,11 @@ TEST_F(QuickJSModuleTest, ImportNodeModule) {
   JS_FreeValue(ctx, module);
 }
 
-TEST_F(QuickJSModuleTest, LoadDirectoryAsModuleShouldFail) {
+TEST_F(QuickJSModuleTest, LoadDirectoryForAsan) {
   auto* ctx = getContext();
 
-  char* file_content =  loadFile("lib");  // lib is a directory, not a file
-  LOG(INFO) << "File content: " << (file_content ? file_content : "null");
+  char* file_content =  loadFile("lib");  // lib is a directory, not a file.
+  if (file_content) {
+    free(file_content);
+  }
 }
